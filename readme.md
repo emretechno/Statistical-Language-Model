@@ -11,7 +11,7 @@ This project implements and analyzes **syllable-based** and **character-based N-
 ## Installation
 1. Clone the repository:
    ```bash
-   git clone <repository_url>
+   git clone https://github.com/emretechno/Statistical-Language-Model
    cd 210104004017_YUSUF_PROJECT
 
 ## Install the required Python packages:
