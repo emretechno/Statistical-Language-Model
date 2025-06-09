@@ -1,47 +1,117 @@
 # Statistical Language Models for Turkish
 
-This project implements and analyzes **syllable-based** and **character-based N-gram language models** for Turkish text. The models calculate N-gram probabilities, evaluate perplexity, and generate random sentences to compare performance.
+**StatLM-Turk** provides robust implementations of syllable-based and character-based N-gram language models for Turkish text, complete with smoothing, perplexity evaluation, and sentence generation utilities.
 
-## Features
-- **Data Preparation**: Processes Turkish text using syllable segmentation and character normalization.
-- **N-Gram Calculation**: Builds 1-Gram, 2-Gram, and 3-Gram models with **Good-Turing smoothing**.
-- **Random Sentence Generation**: Generates sentences using N-gram probabilities.
-- **Performance Evaluation**: Calculates perplexity and compares models.
+---
 
-## Installation
+## 🚀 Features
+
+* **Data Preparation**: Clean, normalize, and syllabify Turkish text.
+* **N-Gram Modeling**: Build unigram, bigram, and trigram models at both character and syllable levels.
+* **Smoothing**: Apply Good–Turing smoothing to handle unseen N‑grams.
+* **Perplexity Evaluation**: Compute and compare model perplexities on held-out data.
+* **Sentence Generation**: Sample fluent Turkish sentences from any N‑gram model.
+
+---
+
+## 📦 Prerequisites
+
+* Python 3.8+
+* pip (Python package manager)
+
+---
+
+## 🔧 Installation
+
 1. Clone the repository:
+
    ```bash
-   git clone https://github.com/emretechno/Statistical-Language-Model
-   cd 210104004017_YUSUF_PROJECT
+   git clone https://github.com/emretechno/Statistical-Language-Model.git
+   cd Statistical-Language-Model
+   ```
+2. Install dependencies:
 
-## Install the required Python packages:
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-pip install -r requirements.txt
+---
 
-## Run the project
+## ▶️ Usage
 
-python run.py
+### 1. Data Preparation
 
-## Results
-- Perplexity values for syllable-based and character-based models.
-- Random sentences generated for different N-gram levels.
-- Analysis and conclusions on model performance.
+Prepare your raw Turkish corpus (UTF‑8 encoded). By default, the script expects data in `DataPreparation/`. Normalize and syllabify:
 
+```bash
+python DataPreparation/prepare_data.py \
+  --input path/to/raw_corpus.txt \
+  --output DataPreparation/processed_corpus.txt
+```
 
-## Project Structure
+### 2. Train N‑Gram Models
 
-210104004017_YUSUF_PROJECT/
-├── DataPreparation/        # Scripts for data processing and normalization
-├── NGramCalculation/       # Scripts for N-gram calculation and smoothing
-├── RandomSentence/         # Script for random sentence generation
-├── REPORT/                 # Report files and documentation
-├── run.py                  # Main script to execute the project
-├── makefile                # Build and setup commands
+Generate character and syllable N‑gram counts with smoothing:
+
+```bash
+python NGramCalculation/train_models.py \
+  --input DataPreparation/processed_corpus.txt \
+  --output models/ \
+  --max_n 3 \
+  --smoothing good_turing
+```
+
+### 3. Evaluate Perplexity
+
+Compute perplexity on a test set:
+
+```bash
+python NGramCalculation/evaluate_perplexity.py \
+  --models models/ \
+  --test_data path/to/test_corpus.txt
+```
+
+### 4. Generate Random Sentences
+
+Sample sentences from any trained model:
+
+```bash
+python RandomSentence/generate.py \
+  --model models/char_trigram.pkl \
+  --num_sentences 5
+```
+
+---
+
+## 📊 Results
+
+* Detailed perplexity comparisons across models are saved to `results/perplexity_results.csv`.
+* Randomly generated sentences for each N‑gram level appear in `results/generated_sentences.txt`.
+* See `REPORT/analysis.pdf` for in-depth performance analysis and visualizations.
+
+---
+
+## 📁 Project Structure
+
+```
+Statistical-Language-Model/
+├── DataPreparation/        # Text cleaning & syllable segmentation scripts
+├── NGramCalculation/       # N‑gram count, smoothing & evaluation modules
+├── RandomSentence/         # Sentence sampling utilities
+├── REPORT/                 # Analysis reports & figures
+├── models/                 # Trained model artifacts (output)
+├── results/                # Perplexity & generated sentences outputs
+├── run.py                  # Quick-run entry point
 ├── requirements.txt        # Python dependencies
-└── readme.md               # Project documentation
+└── LICENSE                 # Project license
+```
 
-## NOTE 
-- The data is not included due to its gigantic size. Can be provided if it is needed.
-- All Turkish characters are normalized (e.g., ş -> s, ğ -> g).
-- N-gram probabilities are calculated with logarithms to avoid underflow issues.
-- Generated sentences are included in the report for analysis.
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! Please fork, create a feature branch, and submit a pull request.
+Ensure any new code includes appropriate tests and documentation.
+
+---
+
